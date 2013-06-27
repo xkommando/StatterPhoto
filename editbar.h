@@ -25,6 +25,13 @@ private:
     Ui::EditBar *ui;
 
     QPushButton* p_undoBtn;
+
+
+    QPushButton* p_rotateRBtn;
+    QPushButton* p_rotateLBtn;
+    QPushButton* p_resizeBtn;
+    QPushButton* p_effectBtn;
+
     QPushButton* p_SaveBtn;
     QPushButton* p_SaveAsBtn;
 

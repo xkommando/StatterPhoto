@@ -286,7 +286,7 @@ void MainWindow::showImageOnWall()
 }
 void MainWindow::showEditBar()
 {
-    this->resize(geometry().width() + 45, geometry().height());
+  //  this->resize(geometry().width() + 30, geometry().height());
     p_editBar->setVisible(true);
 }
 
@@ -316,7 +316,8 @@ void MainWindow::paintEvent(QPaintEvent *)
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // p_editBar->setGeometry(9, initHeight - 109, initWidth - 18, 200);
     //                       x              y    w       h
-    p_editBar->setGeometry(initWidth - 180, 45, 145, initHeight - 110);
+    p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 130);
+  //  p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 130);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     p_aboutBar->setGeometry(9, 9, 300, initHeight - 18);

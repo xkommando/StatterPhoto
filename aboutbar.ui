@@ -145,26 +145,47 @@
     <string>Support</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>280</y>
-     <width>271</width>
-     <height>21</height>
+     <width>407</width>
+     <height>57</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(225, 225, 225)</string>
-   </property>
-   <property name="text">
-    <string>http://www.facebook.com/jackyang</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(225, 225, 225)</string>
+      </property>
+      <property name="text">
+       <string>http://www.facebook.com/jackyang</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(225, 225, 225)</string>
+      </property>
+      <property name="text">
+       <string>https://github.com/xKommando/StatterPhoto</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

@@ -1,6 +1,19 @@
 #include "editbar.h"
 #include "ui_editbar.h"
 
+
+
+#undef NewBtn
+#define NewBtn(name, text)\
+    name = new QPushButton(this);\
+    name->setText(text);\
+    name->setFont(font);\
+    name->setPalette(palette);\
+    name->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"\
+        "QPushButton:hover{border-image: url(:/images/bg.png);}"\
+        "QPushButton:pressed{border-image: url(:/images/bg.png);}")
+
+
 EditBar::EditBar(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::EditBar),
@@ -8,41 +21,34 @@ EditBar::EditBar(QWidget *parent) :
 {
     ui->setupUi(this);
     setStyleSheet("QFrame{border-image: url(:/images/sidebar_bg.png);}");
-    QFont font = p_parent->getButtonFont();;
+    QFont font = p_parent->getButtonFont();
     QPalette palette = p_parent->getButtonPalette();
 
     this->self_ = geometry();
-qDebug() << self_.height() << "   " << self_.width() << '\n';
+//qDebug() << self_.height() << "   " << self_.width() << '\n';
 //              300                         400
-    p_undoBtn = new QPushButton(this);
-    p_SaveBtn = new QPushButton(this);
-    p_SaveAsBtn = new QPushButton(this);
 
-    p_undoBtn->setGeometry(5, 5, 80, 35);
-    p_SaveBtn->setGeometry(5, 40, 40, 35);
-    p_SaveAsBtn->setGeometry(15, 75, 40, 35);
+    NewBtn(p_rotateRBtn,"Rotate Right |");
+    NewBtn(p_rotateLBtn,"Left");
+    p_rotateRBtn->setGeometry(20, 30, 110, 40);
+    p_rotateLBtn->setGeometry(125, 30, 45, 40);
 
-    p_undoBtn->setText("Undo    ");
-    p_undoBtn->setFont(font);
-    p_undoBtn->setPalette(palette);
-    p_SaveBtn->setText("Save    ");
-    p_SaveBtn->setFont(font);
-    p_SaveBtn->setPalette(palette);
-    p_SaveAsBtn->setText("Save as");
-    p_SaveAsBtn->setFont(font);
-    p_SaveAsBtn->setPalette(palette);
+    NewBtn(p_resizeBtn, "Resize");
+    NewBtn(p_effectBtn, "Effects");
+    p_resizeBtn->setGeometry(40, 80, 90, 40);
+    p_effectBtn->setGeometry(40, 130, 90, 40);
 
-    p_undoBtn->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"
-                                 "QPushButton:hover{border-image: url(:/images/bg.png);}"
-                                 "QPushButton:pressed{border-image: url(:/images/bg.png);}");
-    p_SaveBtn->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"
-                                 "QPushButton:hover{border-image: url(:/images/bg.png);}"
-                                 "QPushButton:pressed{border-image: url(:/images/bg.png);}");
-    p_SaveAsBtn->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"
-                                 "QPushButton:hover{border-image: url(:/images/bg.png);}"
-                                 "QPushButton:pressed{border-image: url(:/images/bg.png);}");
+
+    NewBtn(p_undoBtn,   "  Undo  ");
+    NewBtn(p_SaveBtn,   " Save  ");
+    NewBtn(p_SaveAsBtn, "Save as");
+    p_undoBtn->setGeometry(40, self_.height() + 70, 90, 40);
+    p_SaveBtn->setGeometry(20, self_.height() + 110, 60, 40);
+    p_SaveAsBtn->setGeometry(95, self_.height() + 110, 60, 40);
+
     connect(p_SaveAsBtn, SIGNAL(clicked()), this, SLOT(slots_goBack()));
 }
+#undef NewBtn
 
 EditBar::~EditBar()
 {
@@ -50,6 +56,6 @@ EditBar::~EditBar()
 }
 
 void EditBar::slots_goBack() {
-    p_parent->resize(p_parent->geometry().width() - 45, p_parent->geometry().height());
+  //  p_parent->resize(p_parent->geometry().width() - 30, p_parent->geometry().height());
     this->setVisible(false);
 }

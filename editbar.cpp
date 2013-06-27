@@ -46,16 +46,47 @@ EditBar::EditBar(QWidget *parent) :
     p_SaveBtn->setGeometry(20, self_.height() + 110, 60, 40);
     p_SaveAsBtn->setGeometry(95, self_.height() + 110, 60, 40);
 
-    connect(p_SaveAsBtn, SIGNAL(clicked()), this, SLOT(slots_goBack()));
+    connect(p_SaveAsBtn, SIGNAL(clicked()), this, SLOT(slots_saveAs()));
+
+    connect(p_resizeBtn, SIGNAL(clicked()), this, SLOT(slots_resize()));
+    connect(p_effectBtn, SIGNAL(clicked()), this, SLOT(slots_effects()));
+    connect(p_rotateLBtn, SIGNAL(clicked()), this, SLOT(slots_rotateL()));
+    connect(p_rotateRBtn, SIGNAL(clicked()), this, SLOT(slots_rotateR()));
+
+
+    connect(p_SaveBtn, SIGNAL(clicked()), this, SLOT(slots_save()));
+    connect(p_undoBtn, SIGNAL(clicked()), this, SLOT(slots_undo()));
+    connect(p_SaveAsBtn, SIGNAL(clicked()), this, SLOT(slots_saveAs()));
 }
 #undef NewBtn
 
-EditBar::~EditBar()
-{
+EditBar::~EditBar() {
     delete ui;
 }
 
-void EditBar::slots_goBack() {
+void EditBar::slots_rotateL() {
+
+}
+void EditBar::slots_rotateR() {
+
+}
+
+void EditBar::slots_resize() {
+
+}
+void EditBar::slots_effects() {
+
+}
+void EditBar::slots_saveAs() {
   //  p_parent->resize(p_parent->geometry().width() - 30, p_parent->geometry().height());
     this->setVisible(false);
 }
+void EditBar::slots_save() {
+
+}
+void EditBar::slots_undo() {
+
+}
+
+
+

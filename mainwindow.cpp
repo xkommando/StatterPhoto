@@ -317,7 +317,7 @@ void MainWindow::paintEvent(QPaintEvent *)
    // p_editBar->setGeometry(9, initHeight - 109, initWidth - 18, 200);
     //                       x              y    w       h
     p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 130);
-  //  p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 130);
+  //  p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 250);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     p_aboutBar->setGeometry(9, 9, 300, initHeight - 18);

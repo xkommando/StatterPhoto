@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/bg.png</file>
+        <file>resources/shadow_bottom.png</file>
+        <file>resources/shadow_corner1.png</file>
+        <file>resources/shadow_corner2.png</file>
+        <file>resources/shadow_corner3.png</file>
+        <file>resources/shadow_corner4.png</file>
+        <file>resources/shadow_left.png</file>
+        <file>resources/shadow_right.png</file>
+        <file>resources/shadow_top.png</file>
+        <file>images/max.png</file>
+        <file>images/max_on.png</file>
+        <file>images/min.png</file>
+        <file>images/min_on.png</file>
+        <file>images/close.png</file>
+        <file>images/close_on.png</file>
+        <file>images/restore.png</file>
+        <file>images/restore_on.png</file>
+        <file>images/home.png</file>
+        <file>images/home_on.png</file>
+        <file>images/sidebar_bg.png</file>
+        <file>images/return.png</file>
+        <file>images/return_on.png</file>
+        <file>images/btn_bg.png</file>
+        <file>images/return_on_2.png</file>
+        <file>images/close_on_2.png</file>
+        <file>images/max_on_2.png</file>
+        <file>images/min_on_2.png</file>
+        <file>images/restore_on_2.png</file>
+        <file>images/next.png</file>
+        <file>images/next_on.png</file>
+        <file>images/previous.png</file>
+        <file>images/previous_on.png</file>
+        <file>resources/mydog.png</file>
+    </qresource>
+</RCC>

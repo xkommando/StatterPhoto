@@ -1,0 +1,8 @@
+MainWindow:
+	#262626
+Title:
+	#535353
+Button:
+	#626262 - #919191
+Word in Button
+	#969696

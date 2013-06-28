@@ -18,29 +18,25 @@ SOURCES += \
     mainwindow.cpp \
     main.cpp \
     editbar.cpp \
-    bottombar.cpp \
-    aboutbar.cpp
+    aboutbar.cpp \
+    basictools.cpp
 
 HEADERS  += \
     sidebar.h \
     maximageholder.h \
     mainwindow.h \
     editbar.h \
-    bottombar.h \
-    aboutbar.h
+    aboutbar.h \
+    basictools.h
 
 FORMS    += \
     sidebar.ui \
     editbar.ui \
-    aboutbar.ui \
-    bottombar.ui
+    aboutbar.ui
 
 OTHER_FILES += \
     photoviewer.ico \
-    app.rc \
-    _QtBigWork_.pro.user.a3b3f99 \
-    _QtBigWork_.pro.user \
-    _QtBigWork_.pro
+    app.rc
 
 RESOURCES += \
     resources.qrc

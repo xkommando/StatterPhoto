@@ -19,7 +19,6 @@
 
 #include "editbar.h"
 #include "aboutbar.h"
-
 #include "sidebar.h"
 
 struct ScaledImageInfo

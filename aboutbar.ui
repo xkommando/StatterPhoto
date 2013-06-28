@@ -23,190 +23,197 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>130</y>
+     <y>220</y>
      <width>251</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(225, 225, 225);</string>
-   </property>
-   <property name="text">
-    <string>You can freely use this software, </string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>155</y>
-     <width>231</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(225, 225, 225);</string>
-   </property>
-   <property name="text">
-    <string>however, if you want to use it</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>180</y>
-     <width>251</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(225, 225, 225);</string>
-   </property>
-   <property name="text">
-    <string>in a commercial activity, please</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>205</y>
-     <width>171</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(225, 225, 225);</string>
-   </property>
-   <property name="text">
-    <string>contact the authors</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>100</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(225, 225, 225);</string>
-   </property>
-   <property name="text">
-    <string>1.0.0</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>230</y>
-     <width>91</width>
      <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <family>Segoe UI</family>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(214, 21, 40)</string>
+    <string notr="true">color: rgb(225, 225, 225);
+font: 9pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
-    <string>Support</string>
+    <string>Copyright(c)2013 StatterPhoto team</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="label_10">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>282</y>
-     <width>319</width>
-     <height>24</height>
+     <x>10</x>
+     <y>180</y>
+     <width>271</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>Segoe UI</family>
+     <pointsize>8</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(225, 225, 225)</string>
+    <string notr="true">color:rgb(225, 225, 225);
+font: 8pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
-    <string>http://www.facebook.com/jackyang</string>
+    <string>https://github.com/xKommando/StatterPhoto</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>313</y>
-     <width>175</width>
-     <height>24</height>
+     <x>40</x>
+     <y>90</y>
+     <width>191</width>
+     <height>71</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(225, 225, 225)</string>
-   </property>
-   <property name="text">
-    <string>https://github.com/</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_12">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>12</pointsize>
+        <weight>9</weight>
+        <italic>true</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 75 italic 12pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>       StatterPhoto</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>          version: 1.0.0</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="label_9">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>340</y>
-     <width>230</width>
-     <height>24</height>
+     <y>280</y>
+     <width>241</width>
+     <height>141</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(225, 225, 225)</string>
-   </property>
-   <property name="text">
-    <string>xKommando/StatterPhoto</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>    Authors:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>       Jack Yang</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>       Bowen Cai</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>       Liangpeng Zhou</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

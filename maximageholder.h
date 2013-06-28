@@ -16,9 +16,6 @@ public:
 private:
     //EditBar *p_editBar;
 
-
-
-    
 signals:
     void mouseMovedSignal();
     void mousePressedSignal();

@@ -48,7 +48,7 @@ EditBar::EditBar(QWidget *parent) :
     NewBtn(p_undoBtn,   "    Undo  ");
     NewBtn(p_saveBtn,   " Save  ");
     NewBtn(p_saveAsBtn, "Save as");
-    NewBtn(p_printBtn,  "    Print ");
+    NewBtn(p_printBtn,  "   Print ");
 
     p_undoBtn->setGeometry  (30, self_.height() + 50,   110, 30);
     p_saveBtn->setGeometry  (20, self_.height() + 82,   60, 30);

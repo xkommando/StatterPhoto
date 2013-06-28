@@ -4,7 +4,6 @@
 #include <QFrame>
 #include <QPushButton>
 #include <QString>
-#include <QPrinter>
 #include <QRect>
 
 #include "mainwindow.h"
@@ -25,9 +24,6 @@ public slots:
     void returnBtnClicked();
     void openBtnClicked();
     void browseBtnClicked();
-//    void saveBtnClicked();
-//    void saveAsBtnClicked();
-    void printBtnClicked();
     void aboutBtnClicked();
     //void quitBtnClicked();
 
@@ -37,13 +33,10 @@ signals:
 private:
     Ui::SideBar *ui;
 
-    QPrinter printer;
-
     QPushButton *p_returnBtn;
     QPushButton *p_openBtn;
     QPushButton *p_browseBtn;
 
-    QPushButton *p_PrintBtn;
     QPushButton *p_AboutBtn;
     QPushButton *p_QuitBtn;
 

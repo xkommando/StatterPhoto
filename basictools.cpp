@@ -58,8 +58,6 @@ void BasicTools::rotateImage(bool flag)
 //    p_parent->setPixmap(p_parent->getPixmap()->rect().right() + 6,
 //                        );
     p_parent->update();
-
-    p_parent->edited_ = true;
 //    mPImageArea->setImage(mPImageArea->getImage()->transformed(transform));
 //    mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
 //                        mPImageArea->getImage()->rect().bottom() + 6);

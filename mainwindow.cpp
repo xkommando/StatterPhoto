@@ -431,6 +431,7 @@ QStringList MainWindow::getFileList(QString directoryPath)
     {
         fileList += getFileList(directoryPath + QDir::separator() + subDir);
     }
+    return fileList;
 }
 
 void MainWindow::setP_MaxImage(QString fileUrl)

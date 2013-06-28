@@ -1,15 +1,25 @@
+
 #ifndef EDITBAR_H
 #define EDITBAR_H
 
 #include <QFrame>
 #include <QPushButton>
+#include <QButtonGroup>
+#include <QSlider>
+#include <QSpinBox>
 #include <QPrinter>
-
 #include <QDebug>
+#include <QtCore/QTimer>
+#include <QtGui/QImage>
+#include <QtGui/QImageReader>
+#include <QtGui/QImageWriter>
+#include <QtGui/QUndoStack>
+#include <QtGui/QFileDialog>
 
 #include "basictools.h"
 
-//const QPixmap *image = p_parent->p_maxImage->pixmap();
+class AbstractInstrument;
+class AbstractEffect;
 
 namespace Ui {
 class EditBar;
@@ -27,27 +37,81 @@ class EditBar : public QFrame
 public:
     explicit EditBar(QWidget *parent = 0);
     ~EditBar();
+
+
+//    inline QString getFileName() { return filePath_.split('/').last(); }
+//    inline QImage* getImage() { return image_; }
+//    inline void setImage(const QImage &image) { *image_ = image; }
+
+public:
+//    QImage *image_,  /**< Main image. */
+//           _imageCopy; /**< Copy of main image, need for events. */ // ?????????????
+
+//    QString filePath_; /**< Path where located image. */
+
+
+    bool IsEdited, IsPaint, IsResize, IsRightButtonPressed;
+//    QPixmap *pixmap_;
+//  //  QCursor *mCurrentCursor;
+//  //  qreal mZoomFactor;
+
+    BasicTools*                 p_basicTools;
+//    QUndoStack*                 p_undoStack;
+//    QVector<AbstractInstrument*> vec_instrumentsHandlers;
+//    AbstractInstrument*         p_instrumentHandler;
+//    QVector<AbstractEffect*>    vec_effectsHandlers;
+//    AbstractEffect*             p_effectHandler;
+
+
+    QPrinter printer_;
+
 public slots:
-    void slots_rotateL();
-    void slots_rotateR();
-    void slots_effects();
-    void slots_resize();
+    void slot_rotateL();
+    void slot_rotateR();
+    void slot_effects();
+    void slot_resize();
 
-    void slots_undo();
-    void slots_save();
-    void slots_saveAs();
+    void slot_undo();
+    void slot_save();
+    void slot_saveAs();
 
-    void slots_print();
+    void slot_print();
+    void slot_quit();
+
+    void slot_eff_gamma();
+    void slot_eff_gray();
+    void slot_binarize();
+    void slot_gaussian();
+    void slot_sharpen();
+    void slot_eff_apply();
 
 private:
-    Ui::EditBar *ui;
 
-    QPrinter printer;
+    MainWindow*  p_parent;
+    QRect self_;
+
+    void do_print();
+
+
+    Ui::EditBar *ui;
 
     QPushButton* p_rotateRBtn;
     QPushButton* p_rotateLBtn;
     QPushButton* p_resizeBtn;
     QPushButton* p_effectBtn;
+////////////////////////////////////////////////
+    QPushButton* p_eff_gamma;
+    QPushButton* p_eff_gray;
+    QPushButton* p_eff_binarize;
+    QPushButton* p_eff_gaussian;
+    QPushButton* p_eff_sharpen;
+    QPushButton* p_eff_apply;
+    void enable_effectsBtns();
+    void disable_effectsBtns();
+   // QButtonGroup effects_buttons_;
+
+    QSlider*     p_slider;
+    QSpinBox*    p_spinbox;
 
     QPushButton* p_undoBtn;
     QPushButton* p_saveBtn;
@@ -57,13 +121,8 @@ private:
 
 
     QPushButton* p_quitBtn;
-    MainWindow*  p_parent;
 
-    QRect self_;
-
-    BasicTools* p_basicTools;
 public:
-    bool edited_;
 
     const QPixmap* getPixmap() const;
     void setPixmap(const QPixmap& pm);

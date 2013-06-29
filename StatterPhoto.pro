@@ -18,16 +18,14 @@ SOURCES += \
     mainwindow.cpp \
     main.cpp \
     editbar.cpp \
-    aboutbar.cpp \
-    basictools.cpp
+    aboutbar.cpp
 
 HEADERS  += \
     sidebar.h \
     maximageholder.h \
     mainwindow.h \
     editbar.h \
-    aboutbar.h \
-    basictools.h
+    aboutbar.h
 
 FORMS    += \
     sidebar.ui \

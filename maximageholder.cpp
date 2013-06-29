@@ -7,7 +7,7 @@ MaxImageHolder::MaxImageHolder(QWidget *parent) :
     setMouseTracking(true);
 }
 
-void MaxImageHolder::mouseMoveEvent(QMouseEvent *ev)
+void MaxImageHolder::mouseMoveEvent(QMouseEvent* )
 {
     emit mouseMovedSignal();
 }

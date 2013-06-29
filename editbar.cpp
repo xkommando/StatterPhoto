@@ -43,11 +43,11 @@ EditBar::EditBar(QWidget *parent) :
 //qDebug() << self_.height() << "   " << self_.width() << '\n';
 //              300                         400
 
-    NEW_BTN(p_rotateRBtn,"Rotate Right |", 20, 30, 110, 30);
-    NEW_BTN(p_rotateLBtn,"Left", 125, 30, 45, 30);
+    NEW_BTN(p_rotateRBtn,"Rotate Right |",  20, 30, 110, 30);
+    NEW_BTN(p_rotateLBtn,"Left",            125, 30, 45, 30);
 
-    NEW_BTN(p_resizeBtn, "Resize", 40, 85, 90, 30);
-    NEW_BTN(p_effectBtn, "Effects", 40, 120, 90, 30);
+    NEW_BTN(p_resizeBtn, "Resize",          40, 85, 90, 30);
+    NEW_BTN(p_effectBtn, "Effects",         40, 120, 90, 30);
 
     NEW_BTN(p_eff_gamma," Gamma",       10, 155, 70, 30);
     NEW_BTN(p_eff_gray," Gray",         90, 155, 70, 30);
@@ -150,7 +150,7 @@ void EditBar::do_resize(int slider_value) {
     float ratio = (float)( max + slider_value) / max;
 
     setPixmap(getPixmap()->scaledToHeight(currentHeight_ * ratio));
-qDebug() << currentHeight_ << "   ratio: "<< ratio << '\n';
+//qDebug() << currentHeight_ << "   ratio: "<< ratio << '\n';
     this->IsEdited = true;
     this->HasSaved = false;
 }
@@ -216,12 +216,12 @@ void EditBar::slot_eff_gamma() {
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_resize(int)));
+    p_slider->setValue(0);
     connect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gamma(int)));
 }
 
 void EditBar::do_gamma(int slider_value) {
     double modificator = 3 * (double)slider_value / p_slider->maximum();
-
     for(int x = 0; x < image_.width(); x++) {
         for(int y = 0; y < image_.height(); y++) {
             QRgb pixel = image_.pixel(x, y);
@@ -231,24 +231,24 @@ void EditBar::do_gamma(int slider_value) {
             g = 255 * pow(g / 255, modificator);
             float b = qBlue(pixel);
             b = 255 * pow(b / 255, modificator);
-            pixel = qRgb(r, g, b);
-            image_.setPixel(x, y, pixel);
+            image_.setPixel(x, y, qRgb(r, g, b));
         }
     }
 }
 
-
 void EditBar::slot_eff_gaussian() {
+    this->IsEdited = true;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_resize (int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gamma(int)));
+    p_slider->setValue(0);
     connect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
 }
 void EditBar::do_gaussian(int slider_value) {
 
-    int intensity = 1 + slider_value * 8 / p_slider->maximum();
+    int intensity = 1 + slider_value * 6 / p_slider->maximum();
 
     matrix_ << 1 * intensity << 2 * intensity << 1 * intensity
            << 2 * intensity << 4 * intensity << 2 * intensity
@@ -264,15 +264,15 @@ void EditBar::slot_eff_sharpen() {
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_resize(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gamma(int)));
+    p_slider->setValue(0);
     connect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
 }
 void EditBar::do_sharpen(int slider_value) {
 
     int intensity = 1 + slider_value * 8 / p_slider->maximum();
-
-    matrix_ << 0            << -(intensity)        << 0
-           << -(intensity) << (intensity * 4) + 1 << -(intensity)
-           << 0            << -(intensity)        << 0;
+    this->matrix_ << 0            << -(intensity)        << 0
+                  << -(intensity) << (intensity * 4) + 1 << -(intensity)
+                  << 0            << -(intensity)        << 0;
 
 //    this->M_apply_matrix(matrix_);
     connect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
@@ -351,18 +351,15 @@ void EditBar::slot_quit() {
         this->setVisible(false);
     }
 }
-
 void EditBar::mouseMoveEvent(QMouseEvent*) {
     p_parent->resetTimer();
 }
-
 const QPixmap* EditBar::getPixmap() const {
     return p_parent->p_maxImage->pixmap();
 }
 void EditBar::setPixmap(const QPixmap& pm) {
     p_parent->p_maxImage->setPixmap(pm);
 }
-
 //////////////////////////
 QRgb EditBar::M_convolute_pixel(int x, int y, int kernalSz)
 {

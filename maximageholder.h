@@ -10,7 +10,7 @@ class MaxImageHolder : public QLabel
 public:
     explicit MaxImageHolder(QWidget *parent = 0);
 
-    void mouseMoveEvent(QMouseEvent *ev);
+    void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *ev);
 
 private:
@@ -19,10 +19,7 @@ private:
 signals:
     void mouseMovedSignal();
     void mousePressedSignal();
-    void mouseRightButtonClickedSignal();
-    
-public slots:
-    
+    void mouseRightButtonClickedSignal();   
 };
 
 #endif // MAXIMAGEHOLDER_H

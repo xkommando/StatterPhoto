@@ -36,7 +36,8 @@ FORMS    += \
 
 OTHER_FILES += \
     photoviewer.ico \
-    app.rc
+    app.rc \
+    Liscense.txt
 
 RESOURCES += \
     resources.qrc

@@ -48,7 +48,7 @@ font: 9pt &quot;Segoe UI&quot;;</string>
   <widget class="QLabel" name="label_10">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>180</y>
      <width>271</width>
      <height>31</height>
@@ -72,58 +72,6 @@ font: 8pt &quot;Segoe UI&quot;;</string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>90</y>
-     <width>191</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <widget class="QLabel" name="label_12">
-      <property name="font">
-       <font>
-        <family>Segoe UI</family>
-        <pointsize>12</pointsize>
-        <weight>9</weight>
-        <italic>true</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(225, 225, 225);
-font: 75 italic 12pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>       StatterPhoto</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_5">
-      <property name="font">
-       <font>
-        <family>MS Shell Dlg 2</family>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(225, 225, 225);
-font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-      </property>
-      <property name="text">
-       <string>          version: 1.0.0</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -169,7 +117,7 @@ font: 9pt &quot;Segoe UI&quot;;</string>
 font: 9pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>       Jack Yang</string>
+       <string>     Jack Yang</string>
       </property>
      </widget>
     </item>
@@ -189,7 +137,7 @@ font: 9pt &quot;Segoe UI&quot;;</string>
 font: 9pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>       Bowen Cai</string>
+       <string>    Bowen Cai</string>
       </property>
      </widget>
     </item>
@@ -209,7 +157,59 @@ font: 9pt &quot;Segoe UI&quot;;</string>
 font: 9pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>       Liangpeng Zhou</string>
+       <string>    Liangpeng Zhou</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>41</x>
+     <y>81</y>
+     <width>241</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_12">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>12</pointsize>
+        <weight>9</weight>
+        <italic>true</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 75 italic 12pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>       StatterPhoto</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(225, 225, 225);
+font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>  Version: 1.0.0    MIT Liscense</string>
       </property>
      </widget>
     </item>

@@ -388,7 +388,7 @@ void EditBar::slot_save() {
 
 void EditBar::slot_print()
 {
-    if (IsEdited && HasSaved) {
+    if (IsEdited && !HasSaved) {
             ;
     }
     else {
@@ -412,13 +412,17 @@ void EditBar::do_print() {
     }
 }
 void EditBar::slot_quit() {
-    if (IsEdited && HasSaved) {
+    if (IsEdited && !HasSaved) {
         ;
     }
     else {
         this->setVisible(false);
+        p_parent->p_nextBtn->setVisible(true);
+        p_parent->p_previousBtn->setVisible(true);
+        disconnect(p_parent->p_maxImage, SIGNAL(mousePressedSignal()), p_parent, SLOT(showNextPic()));
     }
 }
+
 void EditBar::mouseMoveEvent(QMouseEvent*) {
     p_parent->resetTimer();
 }

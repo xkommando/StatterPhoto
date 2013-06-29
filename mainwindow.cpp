@@ -314,6 +314,9 @@ void MainWindow::showEditBar()
 {
   //  this->resize(geometry().width() + 30, geometry().height());
     p_editBar->setVisible(true);
+    this->p_nextBtn->setVisible(false);
+    this->p_previousBtn->setVisible(false);
+    disconnect(p_maxImage, SIGNAL(mousePressedSignal()), this, SLOT(showNextPic()));
 }
 
 void MainWindow::paintEvent(QPaintEvent *)

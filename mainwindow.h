@@ -94,7 +94,6 @@ signals:
     void loadedImageSignal();
     //void showedImageSignal();
 
-
 protected:
     void paintEvent(QPaintEvent *);
     bool winEvent(MSG *message, long *result);
@@ -107,9 +106,10 @@ private:
 
     bool b_isWidgetsHided;
 
-    QTimer *p_timer;
+    QTimer* p_timer;
     QRect g_mainWindowRect;
 
+public:
     QPushButton *p_closeBtn;
     QPushButton *p_minBtn;
     QPushButton *p_maxBtn;

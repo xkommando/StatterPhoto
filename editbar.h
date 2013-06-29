@@ -15,6 +15,7 @@
 #include <QtGui/QImageWriter>
 #include <QtGui/QUndoStack>
 #include <QtGui/QFileDialog>
+#include <QtGui/QTransform>
 
 #include "basictools.h"
 
@@ -38,33 +39,21 @@ public:
     explicit EditBar(QWidget *parent = 0);
     ~EditBar();
 
-
-//    inline QString getFileName() { return filePath_.split('/').last(); }
-//    inline QImage* getImage() { return image_; }
-//    inline void setImage(const QImage &image) { *image_ = image; }
+private:
+    Ui::EditBar *ui;
+    MainWindow*  p_parent;
+    QRect self_;
+    void mouseMoveEvent(QMouseEvent*);
 
 public:
-//    QImage *image_,  /**< Main image. */
-//           _imageCopy; /**< Copy of main image, need for events. */ // ?????????????
 
-//    QString filePath_; /**< Path where located image. */
-
-
-    bool IsEdited, IsPaint, IsResize, IsRightButtonPressed;
-//    QPixmap *pixmap_;
-//  //  QCursor *mCurrentCursor;
-//  //  qreal mZoomFactor;
-
-    BasicTools*                 p_basicTools;
-//    QUndoStack*                 p_undoStack;
-//    QVector<AbstractInstrument*> vec_instrumentsHandlers;
-//    AbstractInstrument*         p_instrumentHandler;
-//    QVector<AbstractEffect*>    vec_effectsHandlers;
-//    AbstractEffect*             p_effectHandler;
-
-
+    bool IsEdited, HasSaved;
+    int pic_direction_;
+    int currentHeight_;
+    QPixmap pixmap_;
+    QImage  image_;
+   // BasicTools*                 p_basicTools;
     QPrinter printer_;
-
 public slots:
     void slot_rotateL();
     void slot_rotateR();
@@ -80,20 +69,20 @@ public slots:
 
     void slot_eff_gamma();
     void slot_eff_gray();
-    void slot_binarize();
-    void slot_gaussian();
-    void slot_sharpen();
+    void slot_eff_binarize();
+    void slot_eff_gaussian();
+    void slot_eff_sharpen();
     void slot_eff_apply();
-
-private:
-
-    MainWindow*  p_parent;
-    QRect self_;
-
+private slots:
+    void do_resize(int slider_value);
+    void do_gamma(int slider_value);
+    void do_gaussian(int slider_value);
+    void do_sharpen(int slider_value);
     void do_print();
+private:
+    int eff_bincoeff1, eff_bincoeff2;
+    void disable_effectsBtns();
 
-
-    Ui::EditBar *ui;
 
     QPushButton* p_rotateRBtn;
     QPushButton* p_rotateLBtn;
@@ -106,8 +95,6 @@ private:
     QPushButton* p_eff_gaussian;
     QPushButton* p_eff_sharpen;
     QPushButton* p_eff_apply;
-    void enable_effectsBtns();
-    void disable_effectsBtns();
    // QButtonGroup effects_buttons_;
 
     QSlider*     p_slider;
@@ -119,11 +106,17 @@ private:
 
     QPushButton* p_printBtn;
 
-
     QPushButton* p_quitBtn;
 
+private:
+    QList<double> matrix_;
 public:
+    QRgb M_convolute_pixel(int x, int y, int );
+private slots:
+    // do not calculate new image untill apply button is clicked
+    void slot_apply_matrix();
 
+public:
     const QPixmap* getPixmap() const;
     void setPixmap(const QPixmap& pm);
 };

@@ -40,6 +40,7 @@ public:
 
     QStringList filter;
     QStringList fileList;
+    int currentPic;
     SideBar *p_siderBar;
     EditBar *p_editBar;
     AboutBar *p_aboutBar;
@@ -80,7 +81,6 @@ private:
     QStringList getFileList(QString directoryPath);
 
     bool b_isWidgetsHided;
-    int currentPic;
 
     QTimer *p_timer;
     QRect g_mainWindowRect;

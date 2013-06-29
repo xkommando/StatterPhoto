@@ -1,4 +1,4 @@
-//The MIT License (MIT)
+//          The MIT License (MIT)
 //
 //          this source is part of StatterPhto
 //
@@ -31,16 +31,15 @@
 
 
 #undef NEW_BTN
-#define NEW_BTN(name, text, x, y, w, h)\
-    name = new QPushButton(this);\
-    name->setText(text);\
-    name->setFont(font);\
-    name->setPalette(palette);\
-    name->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"\
+#define NEW_BTN(btn_id, btn_name, x, y, w, h)\
+    btn_id = new QPushButton(this);\
+    btn_id->setText(btn_name);\
+    btn_id->setFont(font);\
+    btn_id->setPalette(palette);\
+    btn_id->setStyleSheet("QPushButton{border-image: url(:/images/btn_bg.png);}"\
         "QPushButton:hover{border-image: url(:/images/bg.png);}"\
         "QPushButton:pressed{border-image: url(:/images/bg.png);}");\
-    name->setGeometry(x, y, w, h)
-
+    btn_id->setGeometry(x, y, w, h)
 
 EditBar::EditBar(QWidget *parent) :
     QFrame(parent),
@@ -59,23 +58,25 @@ EditBar::EditBar(QWidget *parent) :
 
     QFont font = p_parent->getButtonFont();
     QPalette palette = p_parent->getButtonPalette();
-
-  //  this->p_basicTools = new BasicTools(this);
     this->self_ = geometry();
-//qDebug() << self_.height() << "   " << self_.width() << '\n';
-//              300                         400
 
     NEW_BTN(p_rotateRBtn,"Rotate Right |",  20, 30, 110, 30);
     NEW_BTN(p_rotateLBtn,"Left",            125, 30, 45, 30);
+    connect(p_rotateLBtn, SIGNAL(clicked()), this, SLOT(slot_rotateL()));
+    connect(p_rotateRBtn, SIGNAL(clicked()), this, SLOT(slot_rotateR()));
 
     NEW_BTN(p_resizeBtn, "Resize",          40, 85, 90, 30);
+    connect(p_resizeBtn, SIGNAL(clicked()), this, SLOT(slot_resize()));
+
     NEW_BTN(p_effectBtn, "Effects",         40, 120, 90, 30);
+    connect(p_effectBtn, SIGNAL(clicked()), this, SLOT(slot_effects()));
 
     NEW_BTN(p_eff_gamma," Gamma",       10, 155, 70, 30);
     NEW_BTN(p_eff_gray," Gray",         90, 155, 70, 30);
     NEW_BTN(p_eff_binarize," Binarize", 10, 190, 70, 30);
     NEW_BTN(p_eff_gaussian," Gaussian", 90, 190, 70, 30);
     NEW_BTN(p_eff_sharpen," Sharpen",   20, 225, 90, 30);
+    this->disable_effectsBtns();
 
     p_slider = new QSlider(Qt::Horizontal, this);
     p_slider->setGeometry(10, 265, 110, 30);
@@ -92,25 +93,17 @@ EditBar::EditBar(QWidget *parent) :
     connect(p_slider, SIGNAL(valueChanged(int)), p_spinbox, SLOT(setValue(int)));
 
     NEW_BTN(p_eff_apply, "  Apply  ",   30, self_.height() + 10,   110, 35);
-    NEW_BTN(p_undoBtn,   "  Undo  ",    30, self_.height() + 50,   110, 30);
+    connect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_eff_apply()));
 
+    NEW_BTN(p_undoBtn,   "  Undo  ",30, self_.height() + 50,   110, 30);
     NEW_BTN(p_saveBtn,   " Save  ", 20, self_.height() + 82,   60, 30);
     NEW_BTN(p_saveAsBtn, "Save as", 95, self_.height() + 82,   60, 30);
     NEW_BTN(p_printBtn,  " Print ", 20, self_.height() + 122,  60, 30);
     NEW_BTN(p_quitBtn,   " Quit  ", 95, self_.height() + 122,  60, 30);
 
-    this->disable_effectsBtns();
-    connect(p_resizeBtn, SIGNAL(clicked()), this, SLOT(slot_resize()));
-    connect(p_rotateLBtn, SIGNAL(clicked()), this, SLOT(slot_rotateL()));
-    connect(p_rotateRBtn, SIGNAL(clicked()), this, SLOT(slot_rotateR()));
-
-    connect(p_effectBtn, SIGNAL(clicked()), this, SLOT(slot_effects()));
-    connect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_eff_apply()));
-
     connect(p_saveBtn, SIGNAL(clicked()), this, SLOT(slot_save()));
     connect(p_undoBtn, SIGNAL(clicked()), this, SLOT(slot_undo()));
     connect(p_saveAsBtn, SIGNAL(clicked()), this, SLOT(slot_saveAs()));
-
     connect(p_printBtn, SIGNAL(clicked()), this, SLOT(slot_print()));
     connect(p_quitBtn, SIGNAL(clicked()),  this, SLOT(slot_quit()));
 }
@@ -171,7 +164,9 @@ void EditBar::do_resize(int slider_value) {
     int max = p_slider->maximum();
     float ratio = (float)( max + slider_value) / max;
 
-    setPixmap(getPixmap()->scaledToHeight(currentHeight_ * ratio));
+    setPixmap(getPixmap()->scaledToHeight(
+                  currentHeight_ * ratio, Qt::SmoothTransformation)
+              );
 //qDebug() << currentHeight_ << "   ratio: "<< ratio << '\n';
     this->IsEdited = true;
     this->HasSaved = false;
@@ -231,6 +226,7 @@ void EditBar::slot_eff_gray() {
 }
 ///////////////////////////////////////////////////////
 void EditBar::slot_eff_gamma() {
+
     this->IsEdited = true;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
@@ -243,7 +239,9 @@ void EditBar::slot_eff_gamma() {
 }
 
 void EditBar::do_gamma(int slider_value) {
-    double modificator = 3 * (double)slider_value / p_slider->maximum();
+
+    float modificator = 3 * (float)slider_value / p_slider->maximum();
+
     for(int x = 0; x < image_.width(); x++) {
         for(int y = 0; y < image_.height(); y++) {
             QRgb pixel = image_.pixel(x, y);
@@ -259,6 +257,7 @@ void EditBar::do_gamma(int slider_value) {
 }
 
 void EditBar::slot_eff_gaussian() {
+
     this->IsEdited = true;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
@@ -270,8 +269,8 @@ void EditBar::slot_eff_gaussian() {
 }
 void EditBar::do_gaussian(int slider_value) {
 
-    int intensity = 1 + slider_value * 6 / p_slider->maximum();
-
+    int intensity = 1 + slider_value * 5 / p_slider->maximum();
+    matrix_.clear();
     matrix_ << 1 * intensity << 2 * intensity << 1 * intensity
            << 2 * intensity << 4 * intensity << 2 * intensity
            << 1 * intensity << 2 * intensity << 1 * intensity;
@@ -291,7 +290,8 @@ void EditBar::slot_eff_sharpen() {
 }
 void EditBar::do_sharpen(int slider_value) {
 
-    int intensity = 1 + slider_value * 8 / p_slider->maximum();
+    int intensity = 1 + slider_value * 5 / p_slider->maximum();
+    matrix_.clear();
     this->matrix_ << 0            << -(intensity)        << 0
                   << -(intensity) << (intensity * 4) + 1 << -(intensity)
                   << 0            << -(intensity)        << 0;
@@ -299,16 +299,60 @@ void EditBar::do_sharpen(int slider_value) {
 //    this->M_apply_matrix(matrix_);
     connect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
 }
+//////////////////////////
+QRgb EditBar::M_convolute_pixel(int x, int y, int kernalSz) {
+    float total = 0.0;
+    float red = 0.0;
+    float green = 0.0;
+    float blue = 0.0;
+    for(int r = -kernalSz / 2; r <= kernalSz / 2; ++r) {
+        for(int c = -kernalSz / 2; c <= kernalSz / 2; ++c) {
+            int kernalVal = this->matrix_[(kernalSz / 2 + r) * kernalSz + (kernalSz / 2 + c)];
+            total += kernalVal;
+            red += qRed(this->image_.pixel(x + c, y + r)) * kernalVal;
+            green += qGreen(image_.pixel(x + c, y + r)) * kernalVal;
+            blue += qBlue(image_.pixel(x + c, y + r)) * kernalVal;
+        }
+    }
+    return( total < 0.0001 ?
+            qRgb(qBound(0, qRound(red), 255),
+                qBound(0, qRound(green), 255),
+                qBound(0, qRound(blue), 255))
+          : qRgb(qBound(0, qRound(red / total), 255),
+                 qBound(0, qRound(green / total), 255),
+                 qBound(0, qRound(blue / total), 255))
+          );
+}
+// do not  calculate new image untill apply button is clicked
+void EditBar::slot_apply_matrix() {
+
+    int kernalSz = sqrt(this->matrix_.size());
+    QImage image_tmp(this->image_);
+
+    for(int i = 2; i < image_tmp.height() - 2; ++i) {
+        for(int j = 2; j < image_tmp.width() - 2; ++j) {
+            image_tmp.setPixel(j, i,
+                 M_convolute_pixel(j, i, kernalSz));
+        }
+    }
+    setPixmap(QPixmap::fromImage(image_));
+   // image_ = image_tmp.copy();
+    disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 void EditBar::slot_eff_apply() {
     this->IsEdited = false;
     this->p_slider->setVisible(false);
     this->p_spinbox->setVisible(false);
     this->disable_effectsBtns();
-    this->setPixmap(QPixmap::fromImage(image_));
+    this->setPixmap(QPixmap::fromImage(this->image_));
 }
 
 void EditBar::slot_undo() {
+
+    disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
+
     this->image_ = pixmap_.toImage();
     setPixmap(pixmap_);
 }
@@ -324,6 +368,8 @@ void EditBar::disable_effectsBtns() {
     disconnect(p_eff_binarize, SIGNAL(clicked()), this, SLOT(slot_eff_binarize()));
     disconnect(p_eff_gaussian, SIGNAL(clicked()), this, SLOT(slot_eff_gaussian()));
     disconnect(p_eff_sharpen, SIGNAL(clicked()), this, SLOT(slot_eff_sharpen()));
+
+    disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void EditBar::slot_saveAs() {
@@ -381,45 +427,4 @@ const QPixmap* EditBar::getPixmap() const {
 }
 void EditBar::setPixmap(const QPixmap& pm) {
     p_parent->p_maxImage->setPixmap(pm);
-}
-//////////////////////////
-QRgb EditBar::M_convolute_pixel(int x, int y, int kernalSz)
-{
-    double total = 0.0;
-    double red = 0.0;
-    double green = 0.0;
-    double blue = 0.0;
-    for(int r = -kernalSz / 2; r <= kernalSz / 2; ++r) {
-        for(int c = -kernalSz / 2; c <= kernalSz / 2; ++c) {
-            int kernalVal = this->matrix_[(kernalSz / 2 + r) * kernalSz + (kernalSz / 2 + c)];
-            total += kernalVal;
-            red += qRed(this->image_.pixel(x + c, y + r)) * kernalVal;
-            green += qGreen(image_.pixel(x + c, y + r)) * kernalVal;
-            blue += qBlue(image_.pixel(x + c, y + r)) * kernalVal;
-        }
-    }
-
-    return( total < 0.0001 ?
-            qRgb(qBound(0, qRound(red), 255),
-                qBound(0, qRound(green), 255),
-                qBound(0, qRound(blue), 255))
-          : qRgb(qBound(0, qRound(red / total), 255),
-                 qBound(0, qRound(green / total), 255),
-                 qBound(0, qRound(blue / total), 255))
-          );
-}
-// do not  calculate new image untill apply button is clicked
-void EditBar::slot_apply_matrix() {
-
-    int kernalSz = sqrt(this->matrix_.size());
-    QImage image_tmp(image_);
-
-    for(int i = 2; i < image_tmp.height() - 2; ++i) {
-        for(int j = 2; j < image_tmp.width() - 2; ++j) {
-            image_tmp.setPixel(j, i,
-                 M_convolute_pixel(j, i, kernalSz));
-        }
-    }
-    image_ = image_tmp;
-    disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
 }

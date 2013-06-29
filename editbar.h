@@ -41,14 +41,10 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QTransform>
 
-#include "basictools.h"
-
-class AbstractInstrument;
-class AbstractEffect;
-
 namespace Ui {
 class EditBar;
 }
+
 QT_BEGIN_NAMESPACE
 class MainWindow;
 QT_END_NAMESPACE
@@ -133,8 +129,8 @@ private:
     QPushButton* p_quitBtn;
 
 private:
-    QList<double> matrix_;
-public:
+    QList<float> matrix_;
+
     QRgb M_convolute_pixel(int x, int y, int );
 private slots:
     // do not calculate new image untill apply button is clicked

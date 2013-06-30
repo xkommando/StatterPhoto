@@ -95,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
 }
 void MainWindow::setInitStyle()
 {
@@ -307,16 +306,20 @@ void MainWindow::showImageOnWall()
     p_maxImage->setVisible(false);
     connect(p_ListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
            this, SLOT(ItemDoubleClicked(QListWidgetItem*)));
-
-
 }
 void MainWindow::showEditBar()
 {
-  //  this->resize(geometry().width() + 30, geometry().height());
-    p_editBar->setVisible(true);
+    this->p_nextBtn->setEnabled(false);
+    this->p_previousBtn->setEnabled(false);
+    this->p_returnBtn->setEnabled(false);
+
     this->p_nextBtn->setVisible(false);
     this->p_previousBtn->setVisible(false);
+    this->p_returnBtn->setVisible(false);
+
     disconnect(p_maxImage, SIGNAL(mousePressedSignal()), this, SLOT(showNextPic()));
+
+    p_editBar->setVisible(true);
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
@@ -345,7 +348,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // p_editBar->setGeometry(9, initHeight - 109, initWidth - 18, 200);
     //                       x              y    w       h
-    p_editBar->setGeometry(initWidth - 190, 65, 180, initHeight - 140);
+    p_editBar->setGeometry(initWidth - 190, 9, 180, initHeight - 18);
   //  p_editBar->setGeometry(initWidth - 220, 60, 180, initHeight - 250);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -483,6 +486,17 @@ const QPalette& MainWindow::getButtonPalette() const {
     return this->m_palette;
 }
 
+void MainWindow::enableNavigation() {
+    this->p_nextBtn->setEnabled(true);
+    this->p_previousBtn->setEnabled(true);
+    this->p_returnBtn->setEnabled(true);
+
+    this->p_nextBtn->setVisible(true);
+    this->p_previousBtn->setVisible(true);
+    this->p_returnBtn->setVisible(true);
+
+    connect(p_maxImage, SIGNAL(mousePressedSignal()), this, SLOT(showNextPic()));
+}
 
 
 

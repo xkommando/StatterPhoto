@@ -60,52 +60,59 @@ EditBar::EditBar(QWidget *parent) :
     QPalette palette = p_parent->getButtonPalette();
     this->self_ = geometry();
 
-    NEW_BTN(p_rotateRBtn,"Rotate Right |",  20, 30, 110, 30);
-    NEW_BTN(p_rotateLBtn,"Left",            125, 30, 45, 30);
+    p_quitBtn = new QPushButton(this);
+    p_quitBtn->setStyleSheet("QPushButton{border-image: url(:/images/return.png);}"
+                                  "QPushButton:hover{border-image: url(:/images/return_on_2.png);}"
+                                   "QPushButton:pressed{border-image: url(:/images/return.png);}");
+    p_quitBtn->setGeometry(60, 20, 60, 60);
+    connect(p_quitBtn, SIGNAL(clicked()),  this, SLOT(slot_quit()));
+
+    NEW_BTN(p_rotateRBtn,"Rotate Right |",  20, 115, 110, 30);
+    NEW_BTN(p_rotateLBtn,"Left",            125, 115, 45, 30);
     connect(p_rotateLBtn, SIGNAL(clicked()), this, SLOT(slot_rotateL()));
     connect(p_rotateRBtn, SIGNAL(clicked()), this, SLOT(slot_rotateR()));
 
-    NEW_BTN(p_resizeBtn, "Resize",          40, 85, 90, 30);
+    NEW_BTN(p_resizeBtn, "Resize",          40, 155, 90, 30);
     connect(p_resizeBtn, SIGNAL(clicked()), this, SLOT(slot_resize()));
 
-    NEW_BTN(p_effectBtn, "Effects",         40, 120, 90, 30);
+    NEW_BTN(p_effectBtn, "Effects",         40, 195, 90, 30);
     connect(p_effectBtn, SIGNAL(clicked()), this, SLOT(slot_effects()));
 
-    NEW_BTN(p_eff_gamma," Gamma",       10, 155, 70, 30);
-    NEW_BTN(p_eff_gray," Gray",         90, 155, 70, 30);
-    NEW_BTN(p_eff_binarize," Binarize", 10, 190, 70, 30);
-    NEW_BTN(p_eff_gaussian," Gaussian", 90, 190, 70, 30);
-    NEW_BTN(p_eff_sharpen," Sharpen",   20, 225, 90, 30);
+    NEW_BTN(p_eff_gamma," Gamma",       10, 235, 70, 30);
+    NEW_BTN(p_eff_gray," Gray",         90, 235, 70, 30);
+    NEW_BTN(p_eff_binarize," Binarize", 10, 275, 70, 30);
+    NEW_BTN(p_eff_gaussian," Gaussian", 90, 275, 70, 30);
+    NEW_BTN(p_eff_sharpen," Sharpen",   20, 315, 90, 30);
     this->disable_effectsBtns();
 
     p_slider = new QSlider(Qt::Horizontal, this);
-    p_slider->setGeometry(10, 265, 110, 30);
+    p_slider->setGeometry(10, 360, 110, 30);
     p_slider->setFont(font);
     p_slider->setPalette(palette);
     p_slider->setMaximumHeight(20);
     p_slider->setVisible(false);
     p_spinbox = new QSpinBox(this);
-    p_spinbox->setGeometry(130, 260, 40, 30);
+    p_spinbox->setGeometry(130, 355, 40, 30);
     p_spinbox->setFont(font);
     p_spinbox->setPalette(palette);
     p_spinbox->setVisible(false);
     connect(p_spinbox, SIGNAL(valueChanged(int)), p_slider, SLOT(setValue(int)));
     connect(p_slider, SIGNAL(valueChanged(int)), p_spinbox, SLOT(setValue(int)));
 
-    NEW_BTN(p_eff_apply, "  Apply  ",   30, self_.height() + 10,   110, 35);
+    NEW_BTN(p_eff_apply, "  Apply  ",   30, self_.height() + 100,   110, 35);
     connect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_eff_apply()));
 
-    NEW_BTN(p_undoBtn,   "  Undo  ",30, self_.height() + 50,   110, 30);
-    NEW_BTN(p_saveBtn,   " Save  ", 20, self_.height() + 82,   60, 30);
-    NEW_BTN(p_saveAsBtn, "Save as", 95, self_.height() + 82,   60, 30);
-    NEW_BTN(p_printBtn,  " Print ", 20, self_.height() + 122,  60, 30);
-    NEW_BTN(p_quitBtn,   " Quit  ", 95, self_.height() + 122,  60, 30);
+    NEW_BTN(p_undoBtn,   "  Undo  ",30, self_.height() + 140,   110, 30);
+    NEW_BTN(p_saveBtn,   " Save  ", 20, self_.height() + 180,   60, 30);
+    NEW_BTN(p_saveAsBtn, "Save as", 95, self_.height() + 180,   60, 30);
+    NEW_BTN(p_shareBtn,  " share ", 20, self_.height() + 220,  60, 30);
+    NEW_BTN(p_printBtn,  " Print ", 95, self_.height() + 220,  60, 30);
 
     connect(p_saveBtn, SIGNAL(clicked()), this, SLOT(slot_save()));
     connect(p_undoBtn, SIGNAL(clicked()), this, SLOT(slot_undo()));
     connect(p_saveAsBtn, SIGNAL(clicked()), this, SLOT(slot_saveAs()));
     connect(p_printBtn, SIGNAL(clicked()), this, SLOT(slot_print()));
-    connect(p_quitBtn, SIGNAL(clicked()),  this, SLOT(slot_quit()));
+    connect(p_quitBtn, SIGNAL(clicked()),  this, SLOT(slot_share()));
 }
 #undef NEW_BTN
 
@@ -114,12 +121,17 @@ EditBar::~EditBar() {
 }
 
 void EditBar::slot_rotateL() {
-    pic_direction_--;
-    pic_direction_ = pic_direction_ == -4 ? 0: pic_direction_;
+    this->pic_direction_--;
+    this->pic_direction_ = pic_direction_ == -4 ? 0: pic_direction_;
 //qDebug() << pic_direction_ << '\n';
     QTransform trans;
     trans.rotate(90);
+
+    image_ = getPixmap()->toImage();
+    pixmap_ = getPixmap()->copy(getPixmap()->rect());
+
     setPixmap(getPixmap()->transformed(trans));
+
     if (0 != pic_direction_) {
         this->IsEdited = true;
         this->HasSaved = false;
@@ -136,6 +148,10 @@ void EditBar::slot_rotateR() {
 //qDebug() << pic_direction_ << '\n';
     QTransform trans;
     trans.rotate(-90);
+
+    image_ = getPixmap()->toImage();
+    pixmap_ = getPixmap()->copy(getPixmap()->rect());
+
     setPixmap(getPixmap()->transformed(trans));
     if (0 != pic_direction_) {
         this->IsEdited = true;
@@ -151,6 +167,10 @@ void EditBar::slot_resize() {
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
     currentHeight_ = getPixmap()->height();
+
+    this->IsEdited = true;
+    this->HasSaved = false;
+
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gamma(int)));
@@ -168,8 +188,6 @@ void EditBar::do_resize(int slider_value) {
                   currentHeight_ * ratio, Qt::SmoothTransformation)
               );
 //qDebug() << currentHeight_ << "   ratio: "<< ratio << '\n';
-    this->IsEdited = true;
-    this->HasSaved = false;
 }
 
 void EditBar::slot_effects() {
@@ -192,6 +210,8 @@ void EditBar::slot_effects() {
 ///////////////////////////////////////////////////////
 void EditBar::slot_eff_binarize() {
     this->IsEdited = true;
+    this->HasSaved = false;
+
     this->p_slider->setVisible(false);
     this->p_spinbox->setVisible(false);
 
@@ -210,6 +230,7 @@ void EditBar::slot_eff_binarize() {
 }
 void EditBar::slot_eff_gray() {
     this->IsEdited = true;
+    this->HasSaved = false;
     this->p_slider->setVisible(false);
     this->p_spinbox->setVisible(false);
 
@@ -226,8 +247,8 @@ void EditBar::slot_eff_gray() {
 }
 ///////////////////////////////////////////////////////
 void EditBar::slot_eff_gamma() {
-
     this->IsEdited = true;
+    this->HasSaved = false;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
 
@@ -257,8 +278,8 @@ void EditBar::do_gamma(int slider_value) {
 }
 
 void EditBar::slot_eff_gaussian() {
-
     this->IsEdited = true;
+    this->HasSaved = false;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
@@ -267,6 +288,7 @@ void EditBar::slot_eff_gaussian() {
     p_slider->setValue(0);
     connect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
 }
+
 void EditBar::do_gaussian(int slider_value) {
 
     int intensity = 1 + slider_value * 5 / p_slider->maximum();
@@ -280,6 +302,8 @@ void EditBar::do_gaussian(int slider_value) {
 }
 
 void EditBar::slot_eff_sharpen() {
+    this->IsEdited = true;
+    this->HasSaved = false;
     this->p_slider->setVisible(true);
     this->p_spinbox->setVisible(true);
     disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_resize(int)));
@@ -314,7 +338,7 @@ QRgb EditBar::M_convolute_pixel(int x, int y, int kernalSz) {
             blue += qBlue(image_.pixel(x + c, y + r)) * kernalVal;
         }
     }
-    return( total < 0.0001 ?
+    return( (total < 0.0001 && total > -0.0001) ?
             qRgb(qBound(0, qRound(red), 255),
                 qBound(0, qRound(green), 255),
                 qBound(0, qRound(blue), 255))
@@ -338,23 +362,29 @@ void EditBar::slot_apply_matrix() {
     setPixmap(QPixmap::fromImage(image_));
    // image_ = image_tmp.copy();
     disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
+    disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gamma(int)));
+    disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_gaussian(int)));
+    disconnect(p_slider, SIGNAL(valueChanged(int)),this, SLOT(do_sharpen(int)));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 void EditBar::slot_eff_apply() {
-    this->IsEdited = false;
-    this->p_slider->setVisible(false);
-    this->p_spinbox->setVisible(false);
-    this->disable_effectsBtns();
-    this->setPixmap(QPixmap::fromImage(this->image_));
+    if (IsEdited) {
+        this->IsEdited = false;
+        this->p_slider->setVisible(false);
+        this->p_spinbox->setVisible(false);
+        this->disable_effectsBtns();
+        this->setPixmap(QPixmap::fromImage(this->image_));
+    }
 }
 
 void EditBar::slot_undo() {
-
     disconnect(p_eff_apply, SIGNAL(clicked()), this, SLOT(slot_apply_matrix()));
-
-    this->image_ = pixmap_.toImage();
-    setPixmap(pixmap_);
+    if (IsEdited) {
+        this->image_ = pixmap_.toImage();
+        setPixmap(pixmap_);
+        IsEdited = false;
+    }
 }
 
 void EditBar::disable_effectsBtns() {
@@ -374,34 +404,50 @@ void EditBar::disable_effectsBtns() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void EditBar::slot_saveAs() {
   //  p_parent->resize(p_parent->geometry().width() - 30, p_parent->geometry().height());
+
+  //  const QPixmap *originalPixmap = getPixmap();
+
+//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+//                               "/home/untitled.png",
+//                               tr("Images (*.png)"));
+//    QString format = "png";
+
+//    if (!fileName.isEmpty())
+//    {//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        getPixmap()->save(fileName, format.toAscii());
+//    }
     this->IsEdited = false;
+    this->HasSaved = true;
+
 }
 void EditBar::slot_save() {
     this->IsEdited = false;
     this->HasSaved = true;
     QString fileName = p_parent->fileList.at(p_parent->currentPic).split('/').last();
+    QString format = fileName.split('.').last();
+    fileName.chop(format.size());
 //   // pixmap_.load(fileName);
-//qDebug() << fileName << '\n';
+ qDebug() << fileName <<   "   " << format << '\n';
 //    image_ = getPixmap()->toImage();
-    image_.save(fileName);
+    image_.save(fileName, format.toAscii(), -1);
+
+    this->IsEdited = false;
+    this->HasSaved = true;
 }
 
-void EditBar::slot_print()
-{
+void EditBar::slot_print() {
     if (IsEdited && !HasSaved) {
             ;
     }
     else {
         do_print();
     }
-
 }
+
 void EditBar::do_print() {
     const QPixmap *image = p_parent->p_maxImage->pixmap();
-
     QPrintDialog printDialog(&printer_, this);
-    if (printDialog.exec())
-    {
+    if (printDialog.exec()) {
         QPainter painter(&printer_);
         QRect rect = painter.viewport();
         QSize size = image->size();
@@ -411,16 +457,19 @@ void EditBar::do_print() {
         painter.drawPixmap(0, 0, *image);
     }
 }
+
 void EditBar::slot_quit() {
     if (IsEdited && !HasSaved) {
         ;
     }
     else {
-        this->setVisible(false);
-        p_parent->p_nextBtn->setVisible(true);
-        p_parent->p_previousBtn->setVisible(true);
-        disconnect(p_parent->p_maxImage, SIGNAL(mousePressedSignal()), p_parent, SLOT(showNextPic()));
+        ;
     }
+    this->setVisible(false);
+    p_parent->enableNavigation();
+}
+
+void EditBar::slot_share() {
 }
 
 void EditBar::mouseMoveEvent(QMouseEvent*) {

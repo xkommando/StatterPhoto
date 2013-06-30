@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = StatterPhoto
 TEMPLATE = app
 
+QMAKE_LFLAGS += -static-libgcc
 
 SOURCES += \
     sidebar.cpp \

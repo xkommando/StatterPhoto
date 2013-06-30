@@ -75,6 +75,8 @@ public:
    // BasicTools*                 p_basicTools;
     QPrinter printer_;
 public slots:
+
+    void slot_quit();
     void slot_rotateL();
     void slot_rotateR();
     void slot_effects();
@@ -85,7 +87,7 @@ public slots:
     void slot_saveAs();
 
     void slot_print();
-    void slot_quit();
+    void slot_share();
 
     void slot_eff_gamma();
     void slot_eff_gray();
@@ -103,7 +105,7 @@ private:
     int eff_bincoeff1, eff_bincoeff2;
     void disable_effectsBtns();
 
-
+    QPushButton* p_quitBtn;
     QPushButton* p_rotateRBtn;
     QPushButton* p_rotateLBtn;
     QPushButton* p_resizeBtn;
@@ -126,7 +128,7 @@ private:
 
     QPushButton* p_printBtn;
 
-    QPushButton* p_quitBtn;
+    QPushButton* p_shareBtn;
 
 private:
     QList<float> matrix_;

@@ -1,4 +1,4 @@
-//The MIT License (MIT)
+//          The MIT License (MIT)
 //
 //          this source is part of StatterPhto
 //
@@ -73,7 +73,6 @@ public:
 
     void setP_MaxImage(QString fileUrl);
 
-
     //void clearAll();
    // void sendMessage();
 public slots:
@@ -125,6 +124,9 @@ protected:
     QPalette m_palette;
 
 public:
+
+    void enableNavigation();
+
     const QFont& getButtonFont() const;
 
     const QPalette& getButtonPalette() const;
